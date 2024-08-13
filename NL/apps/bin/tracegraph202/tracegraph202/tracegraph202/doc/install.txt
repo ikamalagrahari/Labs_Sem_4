@@ -1,0 +1,8 @@
+To run trgraph.exe you have to install Matlab 6.5 (R13) runtime libraries.
+To install the libraries you have to run mglinstaller.exe. Enter destination path, 
+for example: c:\mgl. After the installation of the libraries, you have to add the 
+bin\win32 subdirectory to the system path variable (PATH), for example: 
+SET PATH=c:\mgl\bin\win32. Then you have to unpack files from tracegraph...
+(where ... is the program version) directory to the bin\win32 subdirectory. 
+After that you can run bin\win32\trgraph.exe. If any error occurs check whether
+old Matlab paths in PATH variable are removed.

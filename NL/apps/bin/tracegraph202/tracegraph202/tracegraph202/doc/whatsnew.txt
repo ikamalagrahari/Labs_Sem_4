@@ -1,0 +1,483 @@
+http://www.geocities.com/tracegraph/
+http://diament.ists.pwr.wroc.pl/~tracegr/tracegraph.php
+
+2.02 (06/22/2003)
+-----------------
+* IP conversion bug fixed (when there is no 'ip' in the header)
+* all drop events bugs fixed (when packet type option is unselected)
+* copying to clipboard bug fixed
+
+2.01 (03/10/2003)
+-----------------
+* 'statistics' description has been replaced by 'information'
+* Trace graph script file format has been changed
+* a wireless trace files loading bug fixed
+* time interval bug fixed (when loading a trace file)
+
+2.00b (12/13/2002)
+------------------
+* new statistics:
+  - Simulation Round Trip Times
+  - Round Trip Times between Current and Other node
+* new 2D graphs:
+  - Throughput of sending bits vs minimal simulation RTT
+  - Throughput of sending bits vs average simulation RTT
+  - Throughput of sending bits vs maximal simulation RTT
+  - Throughput of sending bits vs minimal RTT between CN and ON
+  - Throughput of sending bits vs average RTT between CN and ON
+  - Throughput of sending bits vs maximal RTT between CN and ON
+  - Sent packet size vs minimal simulation RTT
+  - Sent packet size vs average simulation RTT
+  - Sent packet size vs maximal simulation RTT
+  - Sent packet size vs minimal RTT between CN and ON
+  - Sent packet size vs average RTT between CN and ON
+  - Sent packet size vs maximal RTT between CN and ON
+  - Simulation RTT cumulative distribution
+  - RTT between CN and ON cumulative distribution
+  - Sent packet ID vs simulation RTT
+  - Sent packet ID vs RTT between CN and ON
+  - Simulation RTT frequency distribution
+  - RTT between CN and ON frequency distribution
+* main window has been reorganized
+* throughput graphs bug fixed
+* trace level at destination node bug fixed 
+* trace level description for delays bug fixed
+* main window bugs fixed
+
+1.92b (12/02/2002)
+------------------
+* faster 3D graphs calculations
+
+1.91b (11/28/2002)
+------------------
+* automatic format detection bugs fixed
+* configuration file bug fixed
+* -ip option bug fixed
+
+1.90b (11/25/2002)
+------------------
+* automatic detection of all supported file formats - file header is not needed (see help 11)
+* new configuration file options (see help 11)
+* axes labels and graph title are editable
+* path and file name is shown in Graphs and Statistics window
+
+1.88b (11/17/2002)
+------------------
+* graphs statistics (minimum/average/maximum value, standard deviation, median) can be saved (see help 3.17)
+* Log scaling on X, Y and Z axes (see help 3.18)
+* graphs can be loaded from .trg text files (see help 3.19)
+* Trace graph scripts are checked before processing
+* throughput vs delay graphs have been changed
+* faster throughput calculations
+* 100 new 2D graphs (see help 4, 6):
+  - Packet size vs min throughput of generating/sending/receiving/forwarding/dropping packets at current node
+  - Packet size vs min throughput of generating/sending/receiving/forwarding/dropping packets
+  - Packet size vs min throughput of generating/sending/receiving/forwarding/dropping bits at current node
+  - Packet size vs min throughput of generating/sending/receiving/forwarding/dropping bits
+  - Packet size vs avg throughput of generating/sending/receiving/forwarding/dropping packets at current node
+  - Packet size vs avg throughput of generating/sending/receiving/forwarding/dropping packets
+  - Packet size vs avg throughput of generating/sending/receiving/forwarding/dropping bits at current node
+  - Packet size vs avg throughput of generating/sending/receiving/forwarding/dropping bits
+  - Packet size vs max throughput of generating/sending/receiving/forwarding/dropping packets at current node
+  - Packet size vs max throughput of generating/sending/receiving/forwarding/dropping packets
+  - Packet size vs max throughput of generating/sending/receiving/forwarding/dropping bits at current node
+  - Packet size vs max throughput of generating/sending/receiving/forwarding/dropping bits
+  - Throughput of sending bits vs minimal/average/maximal simulation jitter
+  - Throughput of receiving bits vs minimal/average/maximal simulation jitter
+  - Throughput of sending bits at CN vs minimal/average/maximal jitter between CN and ON
+  - Throughput of receiving bits vs minimal/average/maximal simulation processing time
+  - Throughput of forwarding bits vs minimal/average/maximal simulation processing time
+  - Throughput of receiving bits at CN vs minimal/average/maximal processing time at CN
+  - Throughput of forwarding bits at CN vs minimal/average/maximal processing time at CN
+  - Throughput of receiving bits at ON vs minimal/average/maximal jitter between CN and ON
+  - Packet size vs minimal/average/maximal simulation processing time
+  - Packet size vs minimal/average/maximal processing time at current node
+  - Packet size vs minimal/average/maximal simulation End2End delay
+  - Packet size vs minimal/average/maximal CN2ON delay
+  - Simulation jitter frequency distribution
+  - Jitter between CN and ON frequency distribution
+  - Simulation jitter cumulative distribution
+  - Jitter between CN and ON cumulative distribution
+* zoom bug fixed (when legend is on/off)
+
+1.71b (10/23/2002)
+------------------
+* script files processing bug fixed
+* ns format trace files from bluehoc simulations can be read
+* turbo mode and processing times bug fixed
+
+1.70b (10/22/2002)
+------------------
+* faster delays calculations
+* faster processing times calculations
+* faster jitter calculations
+* faster calculations concerning numbers of intermediate nodes 
+* faster calculations after loading trace files
+* code optimization
+* turbo mode for delays and jitter calculations
+* configuration file has been added
+* button for switching between current and other node has been added
+* trace files with any extension can be read
+* satellite trace format reading bug fixed
+* IP to node number conversion bug fixed
+* a trace files parsing bug fixed
+
+1.60b (07/01/2002)
+------------------
+* Trace graph scripts can be written to analyse trace or mat files automatically (see help 10)
+
+1.57b (06/18/2002)
+------------------
+* Packet size option (see help 7)
+* Count packets IDs only once option works with drop events (see help 3.5)
+* mat file format has been changed (packets sizes are saved)
+* axes bug fixed (when loading a file with Overlay graphs option on)
+* zoom bug fixed (when refreshing a 3D graph)
+
+1.55c (06/02/2002)
+------------------
+* flow ID bug fixed (when loading a mat file)
+
+1.55b (06/01/2002)
+------------------
+* trace level (AGT, RTR, MAC) options for End2End delays (wireless, mixed and Trace graph formats only)
+
+1.54b (05/26/2002)
+------------------
+* flow ID option added for wired trace files
+* new 2D graphs added:
+  - Forward events time vs simulation processing times at intermediate nodes
+  - Forward events time vs processing times at current node
+  - Receive events time vs simulation processing times at intermediate nodes
+  - Receive events time vs processing times at current node
+* mat file format has been changed (flow ID added)
+
+1.52b (05/23/2002)
+------------------
+* separate windows for graphs and statistics
+* new statistics added:
+  - Average numbers of intermediate nodes for the whole network
+  - Average numbers of intermediate nodes between current and other node
+  - Simulation processing times at intermediate nodes
+  - Processing times at current node
+* new 2D graphs added:
+  - Simulation processing times frequency distribution
+  - Processing times at current node frequency distribution
+  - Packets IDs vs simulation processing times
+  - Packets IDs vs processing times at current node
+  - Simulation processing times cumulative distribution
+  - Processing times at current node cumulative distribution
+* all the known bugs fixed:
+  - numbers of forwarded and lost packets at current node (stats and graphs)
+  - numbers of intermediate nodes forwarding packets for wireless files
+
+1.46b (05/06/2002)
+------------------
+* packet types can be selected/deselected (see help 7)
+* all lines from wireless trace files are loaded now
+* mat file format has been changed (+ and - added in packet type)
+* calculations after trace file loading have been changed
+* number of forwarded packets and bytes in simulation statistics fixed (wireless simulations only)
+* number of lost packets in simulation statistics fixed
+
+1.44b (04/24/2002)
+------------------
+* new 2D graphs added (see help 4):
+  - Packets IDs vs simulation jitter
+  - Packets IDs vs jitter between CN and ON
+* X and Y axes labels added
+
+1.43b (04/22/2002)
+------------------
+* new 2D graphs added (see help 4):
+  - All send events time vs number of intermediate nodes (receiving and forwarding packets)
+  - Send events time at CN vs number of intermediate nodes (receiving and forwarding packets)
+  - All receive events time vs number of intermediate nodes (receiving and forwarding packets)
+  - Receive events time at ON vs number of intermediate nodes (receiving and forwarding packets)
+  - All packets IDs vs number of intermediate nodes (receiving and forwarding packets)
+  - Packets IDs vs number of intermediate nodes (receiving and forwarding packets)
+* edges can be specified for histograms (see help 6)
+* a part of code concerning delays has been changed
+* zoom bug fixed (when automatically refresh graphs option is on)
+
+1.40b (04/06/2002)
+------------------
+* wired + wireless format support (see help 9.4)
+* wired + new trace file format support (see help 9.5)
+* IP addresses support (see help 9)
+* new 2D graphs added (see help 4):
+  - Throughput of sending bits vs minimal simulation End2End delays
+  - Throughput of sending bits vs average simulation End2End delays
+  - Throughput of sending bits vs maximal simulation End2End delays
+  - Throughput of receiving bits vs minimal simulation End2End delays
+  - Throughput of receiving bits vs average simulation End2End delays
+  - Throughput of receiving bits vs maximal simulation End2End delays
+  - Throughput of sending bits at CN vs minimal CN2ON delays
+  - Throughput of sending bits at CN vs average CN2ON delays
+  - Throughput of sending bits at CN vs maximal CN2ON delays
+  - Throughput of receiving bits at ON vs minimal CN2ON delays
+  - Throughput of receiving bits at ON vs average CN2ON delays
+  - Throughput of receiving bits at ON vs maximal CN2ON delays
+  - Send events time vs simulation jitter
+  - Send events time vs jitter between CN and ON
+  - Receive events time vs simulation jitter
+  - Receive events time vs jitter between CN and ON
+  - Send events time vs simulation End2End delays
+  - Send events time vs CN2ON delays
+  - Receive events time vs simulation End2End delays
+  - Receive events time vs CN2ON delays
+  - Packets IDs vs simulation End2End delays
+  - Packets IDs vs CN2ON delays
+* minor or major grid can be added to the axes (see help, 3.10, 3.11)
+* each plotted point can be marked (see help, 3.9)
+* a wireless format extension added
+* hexadecimal to decimal conversion for -Ms field in new trace file format added
+* cumulative delays distribution functions are calculated faster
+* a trace file with it's full path can be read from the command line
+* bandwidth (name) has been changed to throughput
+* file reading and saving errors are catched
+* start time and end time from the command line have to be numbers (fixed)
+
+1.30b (03/07/2002)
+------------------
+* all the known bugs concerning loading trace files with time interval fixed
+* jitter of sent packets at current node bug fixed
+* problems with reading files in Trace graph format fixed
+* start time cannot be smaller than zero when reading a file from the command line
+* other node bug fixed (when checking the option without a loaded file)
+* zoom and legend options bugs fixed (when checking the options without a loaded file)
+
+1.29b (03/06/2002)
+------------------
+* bandwidth calculations bugs fixed
+
+1.28b (02/27/2002)
+------------------
+* new 2D graphs added:
+  - Jitter of sent packets at current node
+  - Jitter of generated packets at current node
+  - Jitter of forwarded packets at current node
+  - Jitter of dropped packets at current node
+  - Jitter of all the generated packets
+  - Jitter of all the sent packets
+  - Jitter of all the received packets
+  - Jitter of all the forwarded packets
+  - Jitter of all the dropped packets
+* bandwidth graphs names have been changed
+* some jitter bugs fixed
+
+1.27b (02/25/2002)
+------------------
+* new 2D graphs added:
+  - IDs of all the generated packets
+  - IDs of all the sent packets
+  - IDs of all the received packets
+  - IDs of all the forwarded packets
+  - IDs of all the dropped packets
+  - IDs of generated packets at current node
+  - IDs of sent packets at current node
+  - IDs of received packets at current node
+  - IDs of dropped packets at current node
+  - IDs of forwarded packets at current node
+  - Sequence numbers of generated packets at current node
+  - Sequence numbers of sent packets at current node
+  - Sequence numbers of received packets at current node
+  - Sequence numbers of forwarded packets at current node
+  - Sequence numbers of dropped packets at current node
+  - Sequence numbers of all the generated packets
+  - Sequence numbers of all the sent packets
+  - Sequence numbers of all the received packets
+  - Sequence numbers of all the forwarded packets
+  - Sequence numbers of all the dropped packets
+  - Bandwidth at current node (dropped packets)
+  - Bandwidth (dropped packets)
+  - Bandwidth at current node (dropped bits)
+  - Bandwidth (dropped bits)
+* menu has been reorganized (some names have been changed, see help)
+* DC bug in graphs legend fixed
+* Number of forwarded packets and bytes (when CN=ON) in Current node statistics fixed
+* Zoom bug fixed
+
+1.24b (02/20/2002)
+------------------
+* Automatically change information (new option, see help 3.9)
+* Count packets IDs only once (new option, see help 3.10)
+* new 2D graphs added (see help 4):
+  - Cumulated sum of generated packets sizes at current node
+  - Cumulated sum of dropped packets sizes at current node
+  - Cumulated sum of generated packets sizes (all)
+  - Cumulated sum of sent packets sizes (all)
+  - Cumulated sum of received packets sizes (all)
+  - Cumulated sum of dropped packets sizes (all)
+  - Cumulated sum of forwarded packets sizes (all)
+  - Bandwidth at current node (generated bits)
+  - Bandwidth (generated bits)
+  - Bandwidth at current node (generated packets)
+  - Bandwidth at current node (sent packets)
+  - Bandwidth at current node (received packets)
+  - Bandwidth at current node (forwarded packets)
+  - Bandwidth (generated packets)
+  - Bandwidth (sent packets)
+  - Bandwidth (received packets)
+  - Bandwidth (forwarded packets)
+* new 3D graphs added (see help 5):
+  - Numbers of sent bytes at all the nodes
+  - Numbers of received bytes at all the nodes
+  - Numbers of forwarded bytes at all the nodes
+  - Numbers of dropped bytes at all the nodes
+  - Numbers of generated bytes at all the nodes
+  - Numbers of lost bytes at all the nodes
+* numbers of generated packets in wireless simulations fixed
+
+1.22b (02/13/2002)
+------------------
+* 3 times faster delays calculations
+
+1.21b (02/11/2002)
+------------------
+* mat file format has been changed
+* all the known bugs concerning loading files with time interval fixed
+* all the known bugs concerning loading files in wired format fixed
+* a packet type bug fixed
+* numbers of generated, sent, forwarded, dropped and lost packets in wired simulations fixed
+* Simulation length is calculated when Time interval option is on
+
+1.20b (01/20/2002)
+------------------
+* saving all the information to text files added (see help.txt, 3.8)
+* text files are saved to a trace file or a mat file directory
+* spaces after packet type removed in descriptions
+* saved text files names have been changed a little (no more ',' instead of '.')
+
+1.19b (01/18/2002)
+------------------
+* trace files loading up to about 5 (NS-2 formats) or 50 (Trace graph's format)
+  times faster (see help.txt, 1.2)
+* Trace graph's trace file format has been changed a little (see help.txt, 9.4)
+ 
+1.18b (01/16/2002)
+------------------
+* not used lines are skipped during wired format loading (see help.txt, 9.1)
+* a wireless format reading problem fixed
+
+1.17b (01/15/2002)
+------------------
+* saving graphs option bugs fixed (when saving 3D graphs data)
+* a wireless format reading problem concerning TORA routing fixed
+* a wired format reading problem fixed
+
+1.16b (01/14/2002)
+------------------
+* saving plotted data into text files added (see help.txt, 3.7)
+* hexadecimal nodes numbers reading from wireless format added (see help.txt, chapter 9)
+* 3D graphs names has been changed a little
+* X axis description in jitter graph has been changed to sequence number
+* an '... isempty ...' warning fixed
+
+1.15b (01/11/2002)
+------------------
+* saving graphs window to jpeg and tiff added (see help.txt, 1.3, 1.4)
+* copying graphs window to clipboard added (see help.txt, 1.5)
+* 2D graphs concerning all the network 'r' events use Direct connection option (see help.txt, chapter 4)
+* some speed improvements
+* 2D graphs concerning all the network bugs fixed (when Other node is ON)
+* 3D graphs fixed
+* legend bugs for 2D graphs concerning all the network fixed 
+  (when Other node is CHECKED and/or Direct connection is ON)
+* 'f' and 'd' events fixed in both wireless formats with MAC trace level
+* wireless format with MAC trace level (see help.txt, 9.2) reading error fixed
+* delays bugs fixed
+* zoom on and legend on bugs fixed
+
+1.13b (01/07/2002)
+------------------
+* number of lost packets added in Simulation information menu 
+  and Current node information menu (see help.txt, 2.1, 2.2)
+* new 3D graph added:
+  - Sum of lost packets at all the nodes (see help.txt, chapter 5)
+* Bandwidth (receiving) and Cumulated sum of received packets (all) graphs fixed (wired format)
+* 'r' events bugs in graphs and information fixed
+* 's' events bugs in graphs fixed
+* 'f' events bugs in graphs fixed
+* 's' and 'f' events graphs plotting speed improved
+
+1.12b (01/02/2002)
+------------------
+* new delays 2D graphs added (see help.txt, chapter 4)
+  - Cumulative distribution function for all delays
+  - Cumulative distribution function for delays between 2 nodes
+* delays between forward and receive events (see help.txt, 2.4)
+* graphs zoom on/off option (see help.txt, 3.5)
+* graphs legend on/off option (see help.txt, 3.6)
+* delays information and histograms errors fixed
+* number of received packets fixed in graphs and information (both wireless formats)
+* number of sent packets partially fixed in graphs and information (both wireless formats)
+* problems with reading some wireless trace files fixed (please read help.txt, chapter 9)
+
+1.10b (12/28/2001)
+------------------
+* new-trace file format support added (see http://www.isi.edu/nsnam/ns/doc/node168.html for details)
+* now you can convert your trace file format into Trace graph's file format (see help.txt, chapter 9.4)
+  what means YOU CAN LOAD ANY TRACE FORMAT FILES after conversion not only NS trace format files !
+* now you can set time interval in which data is analysed (see help.txt, 3.3)
+* now you can check direct (or not) transmission between 2 nodes (see help.txt, 3.4)
+* MAC trace level support added (not sure if properly)
+* number of sending/receiving nodes in Simulation information menu fixed
+* number of forwarded packets in Information menu and graphs fixed
+* packets sizes in Current node information menu fixed
+* program menu has been reorganized (see help.txt for details)
+* more than one Trace graph program can be run at the same time
+* End2End simulation delays (see help.txt, 2.3)
+* End2End delays between current and other nodes (see help.txt, 2.4)
+* new graphs added (see help.txt, chapters 4, 5, 6)
+  - Sum of number of generated packets at all the nodes (3D)
+  - Cumulated sum of number of generated packets at current node
+  - Cumulated sum of number of generated packets for the whole network
+  - Cumulated sum of number of sent packets for the whole network
+  - Cumulated sum of number of forwarded packets for the whole network
+  - Cumulated sum of number of received packets for the whole network
+  - Cumulated sum of number of dropped packets for the whole network
+  - Bandwidth (sending) for the whole network
+  - Bandwidth (receiving) for the whole network
+  - Bandwidth (forwarding) for the whole network
+  - Numbers of simulation End2End delays (HISTOGRAM)
+  - Number of End2End (Current node 2 Other node) delays (HISTOGRAM)
+* several other bugs fixed
+
+1.05b (12/19/2001)
+------------------
+* new graphs added
+  - bandwidth at Current node (sending) graph added
+  - bandwidth at Current node (forwarding) graph added
+* problems with reading some wired and wireless trace files fixed
+* several bugs fixed
+
+1.04b (12/18/2001)
+------------------
+* all the graphs fixed
+* new graphs added
+  - Sum of number of sent packets at all the nodes (3D)
+  - Sum of number of forwarded packets at all the nodes (3D)
+  - Cumulated sum of forwarded packets size at current node
+  - Cumulated sum of number of forwarded packets at current node
+* send & drop events analysis fixed
+* code optimization
+
+1.03b (12/17/2001)
+------------------
+* new information in Current node information menu:
+  - number of generated packets
+  - number of forwarded packets
+  - number of forwarded bytes
+* speed improvements
+* bugs in Current node information menu fixed
+
+1.02b (12/16/2001)
+------------------
+* support for wireless format (see http://www.isi.edu/nsnam/ns/doc/node166.html for details)
+* very fast file loading and saving (see help.txt, chapter 1, for details)
+* new information in Simulation information menu:
+  - number of generated packets
+  - number of forwarded packets
+  - number of forwarded bytes
+* all the known bugs in Simulation information menu fixed

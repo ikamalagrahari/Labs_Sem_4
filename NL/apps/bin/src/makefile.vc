@@ -1,0 +1,43 @@
+# Makefile for use with Visual C++ 6.0 to generate Win32 executables.
+# Copyright (c) 1999 by Christopher Heng. All rights reserved.
+
+# $Id: makefile.vc 1.5 2002/06/20 06:44:38 chris Exp $
+
+# To use this, simply invoke
+#	nmake /f makefile.vc all
+# If you want debugging info:
+#	nmake /f makefile.vc DEBUG=1 all
+
+# macros to handle debugging
+!if defined(DEBUG)	# debugging
+TOFRODOS_CFG_MACRO	= "tofrodos - Win32 Debug"
+!else	# not debugging
+TOFRODOS_CFG_MACRO	= "tofrodos - Win32 Release"
+!endif
+
+# program macros - my del macro assumes the del command accepts
+# a /y argument (meaning assume as y answer to all prompts)
+CP			= copy
+RM			= del /y
+ZIP			= zip
+ZIPFLAGS	= -r
+
+# filename macros
+FROMDOS				= bin\fromdos.exe
+SRCARC				= tfd.zip
+TODOS				= bin\todos.exe
+TOFRODOS_MAKEFILE	= tofrodos.mak
+
+# main targets
+all:
+	$(MAKE) /$(MAKEFLAGS) -f $(TOFRODOS_MAKEFILE) CFG=$(TOFRODOS_CFG_MACRO)
+	$(CP) $(FROMDOS) $(TODOS)
+
+clean:
+	$(RM) bin
+	$(RM) *.ncb
+	$(RM) *.opt
+	$(RM) *.plg
+
+save:
+	$(ZIP) $(ZIPFLAGS) $(SRCARC) *

@@ -1,0 +1,20 @@
+.model small 
+.data 
+BLOCK1 DB 50H,60H,16H,15H,17H 
+BLOCK2 DB 00H 
+.code 
+START:  
+MOV AX,@DATA 
+MOV DS,AX 
+MOV CX,05H 
+MOV SI,offset BLOCK1 
+MOV DI,offset BLOCK2 
+BACK: 
+MOV AL,[SI] 
+MOV [DI+3],AL 
+INC SI 
+INC DI 
+DEC CX 
+JNZ BACK 
+INT 03H 
+END

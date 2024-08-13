@@ -1,0 +1,30 @@
+DATA SEGMENT
+cnt DB 10
+fib DB 10 DUP(0)
+DATA ENDS
+
+CODE SEGMENT
+ASSUME CS:CODE, DS:DATA
+START:
+    MOV AX, DATA
+    MOV DS, AX
+    MOV AL, 00H
+    LEA SI, fib
+    MOV [SI], AL
+    INC SI
+    INC AL
+    MOV [SI], AL
+    MOV CL, cnt
+    MOV CH, 00H
+    SUB CX, 02H
+L1:
+    MOV AL, [SI-1]
+    ADD AL, [SI]
+    DAA
+    INC SI
+    MOV [SI], AL
+    LOOP L1
+    MOV AH, 4CH
+    INT 03H
+CODE ENDS
+END START

@@ -1,0 +1,23 @@
+SAVE MAT FILE: ON
+SAVE GRAPHS TO JPEG: ON
+SAVE GRAPHS STATISTICS: ON
+GRAPHS LEGEND: ON
+RESET OPTIONS: ON
+CLOSE PROGRAM WHEN FINISHED: OFF
+GRAPHS:
+IDs of all the generated packets,PT: cbr,ST: 1.1,ET: 3.3,MARKPOINTS,MINORGRID
+Numbers of generated packets at all the nodes,PS: 1000,FID: 2
+%Cumulative sum of numbers of generated packets at current node,PT: tcp,CN: 2,ON: 3,DC
+Simulation End2End delays frequency distribution,HISTINT: 25,MAJORGRID,STL: MAC,DTL: MAC
+CN2ON delays frequency distribution,HISTEDGES: 0.01 0.02 0.03 0.04,PT: cbr,STL: RTR,DTL: MAC
+Throughput of generating packets at current node,
+Throughput of receiving packets,TIL: 0.5,IDx1,LSY
+Simulation RTT cumulative distribution,SPAK: tcp,ACK: ack
+NETWORK INFORMATION:
+Simulation information,PT: cbr
+Current node information,FID: 1
+Delays between current and other node,CN: 2,ON: 3,DC
+Average numbers of intermediate nodes for the whole network,
+Average numbers of intermediate nodes between current and other node,CN: 0, ON: 3
+Simulation processing times at intermediate nodes,FID: 2
+Processing times at current node,CN: 2

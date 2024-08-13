@@ -1,0 +1,6 @@
+explicit paths for traffic1 : 1_2_4_10
+Alternate path is  paths for traffic1 : 1_16_10
+explicit paths for traffic2 : 1_3_7_5_10
+Alternate path is  paths for traffic2 : 1_16_10
+explicit paths for traffic3 : 3_2_4
+Alternate path is  paths for traffic3 : 3_5_4

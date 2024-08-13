@@ -1,0 +1,107 @@
+'br $Id: fromdos.1 1.10 2003/11/26 15:20:44 chris Exp $'
+.TH tofrodos 1 "Version 1.7" "2003"
+.SH NAME
+tofrodos
+\- Converts text files between DOS and Unix formats.
+.SH SYNOPSIS
+.B fromdos
+[
+.I options
+] [file...]
+.br
+.B todos
+[
+.I options
+] [file...]
+.br
+.SH DESCRIPTION
+DOS text files traditionally have carriage return and line feed pairs
+as their newline characters while Unix text files have the line feed
+as their newline character.
+.I fromdos
+converts text files from the DOS format to the Unix format, while
+.I todos
+converts text files from the Unix format to the DOS format.
+.PP
+The programs accept multiple filenames and wildcards as their arguments.
+You may also use them in a pipe.
+If either program finds its input redirected, it will process stdin
+and place the output on stdout.
+.SH OPTIONS
+.TP
+.BI \-a
+Always convert. If converting from DOS to Unix, this option will
+cause the program to remove ALL carriage returns. The default is to
+remove carriage returns only if they are followed by line feeds.
+If converting from
+Unix to DOS, this option will cause the program to convert ALL
+linefeeds to carriage return pairs. The default is to convert linefeeds
+only if they are not already preceeded by a carriage return.
+.TP
+.BI \-b
+Make a backup of original file. The original
+file is renamed with the original filename and a
+.I .bak
+extension.
+.TP
+.BI \-d
+Convert from DOS to Unix. This forces the program to convert the file in
+a particular direction. By default, if the program is named
+.I fromdos
+or
+.I dos2unix,
+it will assume that the input file is in a DOS format and convert it to
+a Unix format. If the program is named
+.I todos
+or
+.I unix2dos,
+it will assume that the input file is in a Unix format and convert it to
+a DOS format. Using the
+.I \-d
+option forces the program to convert from a DOS format
+to a Unix format regardless of how the program is named. Likewise, using the
+.I \-u
+option forces the program to convert from a Unix format to a DOS format
+regardless of the name of the program.
+.TP
+.BI \-e
+Abort processing on any error in any file. Normally, the program will
+simply skip to process the next file on the command line when it encounters
+any errors. This option causes it to abort on errors.
+.TP
+.BI \-f
+Force: convert even if the file is not writeable (read-only). By default,
+if
+.I fromdos
+or
+.I todos
+finds that the file does not have write permission, it will not process
+that file. This option forces the conversion even if the file is read-only.
+.TP
+.BI \-h
+Display a short help screen on the program usage and quit.
+.TP
+.BI \-o
+Overwrite the original file (no backup). This is the default.
+.TP
+.BI \-p
+Preserve file ownership and time. On systems like Linux, the file
+ownership will only be preserved if the user is root, otherwise it
+will just set the file time and silently fail the change of file
+ownership. If you want a warning message when the file ownership
+cannot be changed, use -v.
+.TP
+.BI \-u
+Convert from DOS to Unix. See the
+.I \-d
+option above for more information.
+.TP
+.BI \-v
+Verbose.
+.TP
+.BI \-V
+Show version message and quit.
+.SH AUTHOR
+The program and its documentation are copyrighted (c) 1996-2003 by
+Christopher Heng. All rights reserved. They are distributed under
+the terms of the GNU General Public License Version 2.

@@ -1,0 +1,53 @@
+DATA SEGMENT
+    BLOCK1 DB 'MALAYALAM$'
+    MSG1 DB "IT IS PALINDROME $"
+    MSG2 DB "IT IS NOT PALINDROME $"
+    PAL DB 00H
+DATA ENDS
+PRINT MACRO MSG
+    MOV AH, 09H
+    LEA DX, MSG
+    INT 21H
+ENDM
+EXTRA SEGMENT
+    BLOCK2 DB 9 DUP (?)
+EXTRA ENDS
+CODE SEGMENT
+ASSUME CS: CODE, DS: DATA, ES: EXTRA
+START: 
+    MOV AX, DATA
+    MOV DS, AX
+    MOV AX, EXTRA
+    MOV ES, AX
+    LEA SI, BLOCK1
+    LEA DI, BLOCK2+8
+    MOV CX, 0008H ; Change to 8, as you are copying 8 characters
+BACK: 
+    CLD
+    LODSB
+    STD
+    STOSB
+    LOOP BACK
+    LEA SI, BLOCK1
+    LEA DI, BLOCK2
+    MOV CX, 0009H ; Change to 9, as you are comparing 9 characters
+    CLD
+    REPZ CMPSB
+    JZ PAL_FOUND ; Jump if palindrome found
+    JMP NOT_PALINDROME ; Jump to print MSG2 if not palindrome
+PAL_FOUND:
+    PRINT MSG1
+    JMP END_CODE
+NOT_PALINDROME:
+    PRINT MSG2
+END_CODE:
+    MOV AH, 4CH ; Terminate program
+    INT 21H
+CODE ENDS
+END START
+
+
+
+
+
+

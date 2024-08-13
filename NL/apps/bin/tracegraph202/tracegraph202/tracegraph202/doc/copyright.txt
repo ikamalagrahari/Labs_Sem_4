@@ -1,0 +1,12 @@
+Copyright (c) 2001-2005 by Jaroslaw Malek
+All rights reserved.
+Author contact: wido@o2.pl
+
+Using and copying any version of Trace graph program and its documentation
+is allowed only for non-commercial purposes provided that the above copyright 
+notice and this permission appear in all copies and any materials
+related to Trace graph. Commercial use requires a permission from
+Jaroslaw Malek. Trace graph cannot be distributed, sold, 
+copied or modified without Jaroslaw Malek's permission.
+Trace graph is provided with no warranty. Jaroslaw Malek is not responsible 
+for any events and results caused by using Trace graph.

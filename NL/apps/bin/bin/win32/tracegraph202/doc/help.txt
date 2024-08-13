@@ -1,0 +1,826 @@
+Trace graph 2.02 help
+^^^^^^^^^^^^^^^^^^^^^
+TABLE OF CONTENTS:
+==================
+ 1. File menu
+    1.1. Open a trace file
+    1.2. Save trace as mat file
+    1.3. Save figure to jpeg
+    1.4. Save figure to tiff
+    1.5. Copy figure to clipboard
+ 2. Network information menu
+    2.1. Simulation information
+    2.2. Current node information
+    2.3. Simulation End2End delays
+    2.4. Delays between current and other node
+    2.5. Average numbers of intermediate nodes for the whole network
+    2.6. Average numbers of intermediate nodes between current and other node
+    2.7. Simulation processing times at intermediate nodes
+    2.8. Processing times at current node
+    2.9. Simulation Round Trip Times
+   2.10. Round Trip Times between current and other node
+ 3. Options menu
+    3.1. Overlay graphs
+    3.2. Automatically refresh information
+    3.3. Automatically refresh graphs
+    3.4. Direct connection
+    3.5. Count packets IDs only once
+    3.6. Time interval
+    3.7. Use specified edges for histograms
+    3.8. Save information
+    3.9. Save graphs
+   3.10. Mark each plotted point
+   3.11. Add minor grid to the axes
+   3.12. Add major grid to the axes
+   3.13. Zoom on
+   3.14. Legend on
+   3.15. Flow ID
+   3.16. Turbo mode
+   3.17. Save graphs statistics
+   3.18. Log scaling on X, Y, Z axes
+   3.19. Load a graph
+ 4. 2D Graphs menu
+ 5. 3D Graphs menu
+ 6. Histograms menu
+ 7. Other options
+ 8. Shortcuts
+ 9. Supported file formats
+    9.1. Wired (see http://www.isi.edu/nsnam/ns/doc/node234.html for details)
+    9.2. Wireless (see http://www.isi.edu/nsnam/ns/doc/node166.html for details)
+    9.3. New trace file format (wireless, see http://www.isi.edu/nsnam/ns/doc/node168.html for details)
+    9.4. Wired-wireless
+    9.5. Wired-new trace file format
+    9.6. Converting your own trace files formats into Trace graph trace file format
+10. Trace graph script file format
+11. Trace graph configuration file
+12. System requirements
+13. Author contact
+
+NOTE! There can be more than one Trace graph run at a time.
+NOTE! The time used in network information and graphs is given in seconds.
+
+1. FILE MENU
+============
+
+1.1. Open a trace file
+----------------------
+A trace file or a mat-file can be opened from the File->Open menu
+or from the command line, for example: 
+
+trgraph c:\out.tr
+trgraph c:\out.mat
+
+TIME INTERVAL can be specified (only with .tr file!) in seconds to load data only between 
+it's beginning and end, for example:
+
+trgraph c:\out.tr 1.237 3.456
+
+The more 'd' events and lines the longer file loading time because of preliminary calculations.
+Loading very big files (for example with 200000 or more lines) can take even a half an hour or more.
+When no error appears it means the program is still loading a file.
+A trace file is parsed and saved to 'temp' (always) and 'temp1' (only if TIME INTERVAL is specified) 
+files before loading. Temporary files are saved in Trace graph format (see 9.6).
+
+1.2. Save trace as mat file
+---------------------------
+A mat-file can be saved from the File->Save menu. 
+Saving a trace file into a mat-file increases speed of file loading.
+The more 'd' events and lines the longer file loading time because of preliminary calculations.
+Saving a trace file (only once) into a mat-file after loading lets
+to load it from mat-file in a few seconds!
+
+IMPORTANT! Some Trace graph versions can save different information into a mat-file, 
+           so it's better to create a new mat-file for a trace file! See whatsnew.txt for changes.
+
+1.3. Save figure to jpeg
+------------------------
+Saves graphs window as a jpeg picture.
+
+1.4. Save figure to tiff
+------------------------
+Saves graphs window as a tiff picture (lossless compression).
+
+1.5. Copy figure to clipboard
+-----------------------------
+Copies graphs windows to clipboard as a bitmap.
+
+THIS OPTION DOESN'T WORK UNDER UNIX!
+
+
+2. NETWORK INFORMATION MENU
+===========================
+
+2.1. Simulation information
+---------------------------
+This is information about the whole simulated network. 
+Only Count packets IDs only once, PACKET TYPE, START TIME and END TIME options (see 3.5, 7) 
+have influence on the results. Here are some options which need some explanations:
+- Number of forwarded packets: number of successful 'f' events, each packet ID is counted once
+  when Count packets IDs only once option is ON (see 3.5) or as many times as it's forwarded
+  when Count packets IDs only once option is OFF
+- Number of forwarded bytes: number of successfully forwarded bytes, each packet is counted
+  as many times as it's forwarded
+- Number of lost packets: number of sent by the source and never received by the destination packets 
+  (packets with -Id field equal -1 are skipped, see 9.6)
+- Number of dropped packets: number of drop ('d') events.
+     
+2.2. Current node information
+-----------------------------
+This is information about CURRENT NODE.
+CURRENT NODE is the source and OTHER NODE is the destination when numbers of generated/sent/forwarded 
+packets/bytes are counted.
+CURRENT NODE is the destination and OTHER NODE is the source when numbers of received/dropped
+packets/bytes are counted.
+Here are some options which need some explanations:
+- Number of lost packets:
+  When DIRECT CONNECTION option is ON (see 3.4):
+  = number of forwarded packets by CURRENT NODE - number of received packets by OTHER NODE
+  When DIRECT CONNECTION option is OFF:
+  = number of sent packets by CURRENT NODE - number of received packets by OTHER NODE.
+See 3.5 for another details.
+
+2.3. Simulation End2End delays
+------------------------------
+This is information about End2End delays. 
+End2End delay = time (in seconds) when packet was received by OTHER NODE - time (in seconds) when packet was sent by CURRENT NODE.
+SOURCE AND DESTINATION TRACE LEVEL options are used for the calculations (wireless, mixed and Trace graph formats only), i.e.
+only packets sent at source trace level and received at destination trace level are considered.
+Trace level (AGT, RTR, MAC) at the source and destination nodes can be chosen from the list. 
+See SHORTCUTS for CN, ON, PID explanations.
+
+2.4. Delays between current and other node
+------------------------------------------
+This information is shown if OTHER NODE is checked.
+It shows End2End delays (in seconds) between CURRENT NODE (sender) and OTHER NODE (receiver) when
+DIRECT CONNECTION option is OFF (see 3.4). When DIRECT CONNECTION option is ON it shows delays
+between CURRENT NODE (forwards packets) and OTHER NODE (receives packets).
+SOURCE AND DESTINATION TRACE LEVEL options are used for the calculations (wireless, mixed and Trace graph formats only), i.e.
+only packets sent at source trace level and received at destination trace level are considered. When DIRECT CONNECTION option is on
+only DESTINATION TRACE LEVEL option is used (for Other node) because Current node forwards packets only at RTR trace level.
+Trace level (AGT, RTR, MAC) at the source (Current node) and destination node (Other node) can be chosen from the list. 
+See 8. SHORTCUTS for PID explanation.
+
+2.5. Average numbers of intermediate nodes for the whole network
+----------------------------------------------------------------
+Average number of nodes receiving packets = sum of numbers of all the intermediate nodes (nodes between source and destination nodes) 
+                                            receiving packets sent by all the source nodes / number of received packets at all the
+                                            destination nodes
+Average number of nodes forwarding packets = sum of numbers of all the intermediate nodes (nodes between source and destination nodes) 
+                                             forwarding packets sent by all the source nodes / number of received packets at all the
+                                             destination nodes
+Numbers of intermediate nodes are calculated in the same way like in Number of intermediate nodes graphs.
+For example, if we take results (Y axis) from 'All packets IDs vs number of intermediate nodes-fwd' graph, sum all of them and divide
+by number of packets IDs (X axis) we get the same result as from 'Average number of nodes forwarding packets' information.
+DIRECT CONNECTION option is turned OFF.
+
+2.6. Average numbers of intermediate nodes between current and other node
+-------------------------------------------------------------------------
+Average number of nodes receiving packets = sum of numbers of all the intermediate nodes (nodes between Current node-source and 
+                                            Other node-destination) receiving packets sent by Current node / number of received packets 
+                                            at Other node
+Average number of nodes forwarding packets = sum of numbers of all the intermediate nodes (nodes between Current node-source and 
+                                             Other node-destination) forwarding packets sent by Current node / number of received packets 
+                                             at Other node
+Numbers of intermediate nodes are calculated in the same way like in Number of intermediate nodes graphs.
+For example, if we take results (Y axis) from 'Packets IDs vs number of intermediate nodes-rec' graph, sum all of them and divide
+by number of packets IDs (X axis) we get the same result as from 'Average number of nodes receiving packets' information.
+DIRECT CONNECTION option is turned OFF.
+
+2.7. Simulation processing times at intermediate nodes
+------------------------------------------------------
+Processing time at intermediate node for a packet = time when the packet was forwarded - time when the packet was received
+For minimal and maximal processing time node number and packet ID is shown.
+
+2.8. Processing times at current node
+-------------------------------------
+Processing time at current node for a packet = time when the packet was forwarded - time when the packet was received
+When OTHER NODE is checked only packets forwarded at Current node to Other node are considered.
+For minimal and maximal processing time packet ID is shown.
+
+2.9. Simulation Round Trip Times
+--------------------------------
+Round Trip Time (RTT) for a packet = time when ACK (acknowlegde) packet sent by the destination was received by the source - 
+                                     time when the packet was sent by the source
+SOURCE AND DESTINATION TRACE LEVEL options are used for the calculations (wireless, mixed and Trace graph formats only), i.e.
+only packets sent at source trace level and received at destination trace level are considered.
+Trace level (AGT, RTR, MAC) at the source node can be chosen from the list. 
+SENT PACKET and ACK PACKET options are used to select sent packet type at the source and ACK packet type at the destination.
+See shortcuts for SPID, SPAK, ACK explanations.
+
+2.10. Round Trip Times between current and other node
+-----------------------------------------------------
+Round Trip Time (RTT) for a packet = time when ACK (acknowlegde) packet sent by Other node was received by Current node - 
+                                     time when the packet was sent by Current node
+SOURCE AND DESTINATION TRACE LEVEL options are used for the calculations (wireless, mixed and Trace graph formats only), i.e.
+only packets sent at source trace level and received at destination trace level are considered.
+Trace level (AGT, RTR, MAC) at the source node (Current node) can be chosen from the list. 
+SENT PACKET and ACK PACKET options are used to select sent packet type at Current node and ACK packet type at Other node.
+See shortcuts for SPID, SPAK, ACK explanations.
+
+
+3. OPTIONS MENU
+===============
+
+3.1. Overlay graphs
+-------------------
+Up to 7 graphs can be plotted in the window when this option is on.
+Default is OFF.
+
+3.2. Automatically refresh information
+--------------------------------------
+When this option is ON (default) all the information from the Network information menu refreshes when
+for example PACKET TYPE is changed (see 7. Other options). Works similar to 3.2. Automatically change graphs.
+Default is OFF.
+
+3.3. Automatically refresh graphs
+---------------------------------
+When this option is on all the plotted graphs refresh if for example 
+PACKET TYPE is changed (see 7. Other options).
+Default is OFF.
+
+3.4. Direct connection
+----------------------
+This option specifies connection type between CURRENT NODE and OTHER NODE.
+It works if OTHER NODE is checked. It only concerns receiving and dropping events.
+When this option is ON analysis is done as if CURRENT NODE was directly connected to OTHER NODE.
+When this option is OFF analysis is done as if CURRENT NODE was the source connected to OTHER NODE 
+(destination node) via intermediate nodes.
+If there's no connection between CURRENT NODE and OTHER NODE calculations results are equal zero.
+Default is OFF.
+
+3.5. Count packets IDs only once
+---------------------------------
+When this option is ON packets IDs are counted only once. When it's OFF the same packets are counted as many times
+as they are received (number of receive events), forwarded (number of forward events) or dropped (number of drop events). 
+For example a node can receive the same packet 5 times, so when this option is ON the packet is counted only once not 5 times.
+This option works with the following network information and graphs:
+* Simulation information: 
+  - Number of forwarded packets
+  - Number of dropped packets
+* Current node information: 
+  - Number of received packets
+  - Number of forwarded packets
+  - Number of dropped packets
+* 2D graphs:
+  - Throughput of receiving packets at current node
+  - Throughput of forwarding packets at current node
+  - Throughput of dropping packets at current node
+  - Throughput of receiving packets
+  - Throughput of forwarding packets
+  - Throughput of dropping packets
+* 3D graphs:
+  - Numbers of forwarded packets at all the nodes
+  - Numbers of received packets at all the nodes
+  - Numbers of dropped packets at all the nodes.
+If packets IDs are not unique results will be wrong. See 8 for shortcuts.
+Default is OFF.
+
+3.6. Time interval
+------------------
+Simulated network can be analysed in a selected time interval.
+START TIME is the beginning of the time interval. END TIME is the end of the time interval.
+When this option is on trace file lines with time between START TIME and END TIME are selected.
+Default is OFF.
+See also 1.1.
+
+3.7 Use specified edges for histograms
+--------------------------------------
+When this option is ON edges specified in the field Hist. egdes (see 7. Other options) are used when plotting histograms. 
+For example the field can be: 0.03 0.05 0.07. See 6. Histograms for calculations details.
+
+3.8. Save information
+---------------------
+When this option is ON all the visible information from Network information window are saved to text files.
+A saved file name format:
+'trace file or mat file name'-'information name' 'options'.trg
+for example:
+DoS.tr-node 0 info.trg
+DoS.tr-node 5 delays ON_0.trg
+Saved files have 'trg' extensions.
+Files are saved to a trace file or a mat file directory.
+Default is OFF.
+
+3.9. Save graphs
+----------------
+When this option is ON all the plotted graphs data is saved into separated text files.
+A saved file name format:
+'trace file or mat file name'-'graph legend'.trg
+for example:
+dos.mat-Throughput at current node (sending) X_time TIL_0,016499 CN_0.trg
+There is a change in the description: ':' is changed to '_'.
+Saved files have 'trg' extensions.
+Saved files contain 1 or 2 or 3 columns (X Y Z coordinates).
+When there is an empty plot only '0' is saved into a file.
+Files are saved to a trace file or a mat file directory.
+Default is OFF.
+
+3.10. Mark each plotted point
+----------------------------
+When this option is ON all the plotted data points are marked with a circle.
+Default is OFF.
+
+3.11. Add minor grid to the axes
+--------------------------------
+Adds minor grid to the current axes in the graphs windows.
+Default is OFF.
+
+3.12. Add major grid to the axes
+--------------------------------
+Adds major grid to the current axes in the graphs windows.
+Default is OFF.
+
+3.13. Zoom on
+------------
+Turns zoom ON/OFF when 2D graphs or histograms are plotted.
+When zoom is OFF legend can be moved holding left mouse button.
+Default is ON.
+
+3.14. Legend on
+---------------
+Turns legend ON/OFF when 2D graphs or histograms are plotted.
+Legend can be edited by double click on it with left mouse button
+when zoom is OFF.
+Default is ON.
+
+3.15. Flow ID
+-------------
+When this option is ON flow ID is used in wired trace files analysis.
+Default is OFF.
+
+3.16. Turbo mode
+----------------
+This option is used only for delays and jitter calculations.
+Analysis results are in most cases wrong but sometimes they are the same as if the option was OFF.
+The results depend on the trace file.
+Default is OFF.
+
+3.17. Save graphs statistics
+----------------------------
+When this option is ON all the plotted graphs statistics are saved into separated text files.
+A saved file name format:
+'trace file or mat file name'-STATS-'graph legend'.trg
+for example:
+dos.mat-STATS-Throughput at current node (sending) X_time TIL_0,016499 CN_0.trg
+There is a change in the description: ':' is changed to '_'.
+Saved files have 'trg' extensions.
+Saved files contain statistics for X, Y and Z axes values.
+Files are saved to a trace file or a mat file directory.
+Default is OFF.
+
+3.18. Log scaling on X, Y, Z axes
+---------------------------------
+When this option is ON natural logarithm of X/Y/Z axis values is calculated and plotted. 
+Only values greater than zero are plotted. Log scaling on X and Y axes works only with 2D graphs.
+Log scaling on Z axis works only with 3D graphs.
+Default is OFF.
+
+3.19. Load a graph
+------------------
+This option loads graphs from .trg files saved using Save graphs option (3.9). There's only legend 
+(file name without .trg), no axes labels. Text file with graph data should have 2 (X Y) or 3 (X Y Z) columns separated with space.
+All files in this format should be read.
+
+
+4. 2D GRAPHS
+============
+
+* 2D graphs can be zoomed in/out. An area to zoom can be marked in with left mouse button.
+  To zoom out press right mouse button.
+* 'simulation' in the graphs names means the graphs concern the whole network.
+* 'CN2ON' and 'between CN and ON' in the graphs names means the graphs concern only CURRENT NODE 
+  and OTHER NODE (DIRECT CONNECTION option is used, see 3.4). 
+  NOTE! DON'T FORGET TO CHECK OTHER NODE WHEN PLOTTING GRAPHS FOR CURRENT AND OTHER NODE.
+* Graphs concerning 'r' events in the whole network use DIRECT CONNECTION option (see 3.4).
+  When DIRECT CONNECTION is ON all the 'r' events are counted. When DIRECT CONNECTION is OFF
+  only 'r' events where CURRENT NODE=DESTINATION NODE are counted. This option should be used 
+  only if OTHER NODE is checked.
+* There is a legend for each graph. It shows the name of a graph and contains additional 
+  description (see chapter 8). 
+* When there are no packets transmitted an empty graph is plotted (Y values are equal zero). 
+* 'all', 'simulation' or lack of 'at current node' in the names of the graphs 
+  means that the whole simulation events are analysed (not only events at the CURRENT NODE).
+* When THROUGHPUT graph is plotted TIME INTERVAL LENGTH option is used. To plot a THROUGHPUT graph
+  sum of sizes (... bits) or number (... packets) of generated/sent/forwarded/received packets 
+  is calculated every TIME INTERVAL and divided by it's LENGTH. THROUGHPUT (... bits) is shown in BITS. 
+  THROUGHPUT (... packets) shows numbers of packets in every TIME INTERVAL. TIME INTERVAL LENGTH 
+  is equal 1 second by default. See 3.5 for details about some THROUGHPUT graphs.
+* THROUGHPUT VS DELAY graph shows throughput (bits) on X axis and delay on Y axis. Throughput and delays 
+  (minimal/average/maximal) are calculated every TIME INTERVAL. 'throughput of sending' means
+  throughput of sending or forwarding at CURRENT NODE. 'throughput of receiving' means
+  throughput of receiving at OTHER NODE. For 'throughput of sending...' graphs delays of sent packets 
+  are calculated in the same time intervals as throughput is calculated. For 'throughput of receiving...' 
+  graphs delays of received packets are calculated in the same time intervals as throughput is calculated. 
+  When DIRECT CONNECTION is ON throughput of sending bits from CURRENT NODE to OTHER NODE means throughput 
+  of forwarding bits from CN to ON. See 2.3, 2.4 for delays calculations. After throughput and delays 
+  calculations throughput values are sorted in ascending order and then delays values are sorted 
+  in the same order. Then a graph is plotted.
+* THROUGHPUT VS JITTER graph shows throughput (bits) on X axis and jitter on Y axis. It's similar to Throughput vs delay graphs.
+  If S(i) is the time packet i was sent from the sender, and R(i) is the time it was received by the receiver, 
+  the jitter(i)=|(R(i+1)-S(i+1))-(R(i)-S(i)|. 
+* THROUGHPUT VS PROCESSING TIME graph shows throughput (bits) on X axis and processing time on Y axis.
+  Throughput and processing times (minimal/average/maximal) are calculated every TIME INTERVAL. Throughput of receiving/forwarding bits 
+  and processing times are calculated at Current node or in the whole network (simulation processing time).
+* THROUGHPUT VS RTT graph shows throughput (bits) on X axis and RTT on Y axis.
+  Throughput and RTT (minimal/average/maximal) are calculated every TIME INTERVAL. Throughput of sending bits 
+  is calculated at Current node or in the whole network. RTT is calculated between Current node (source) and Other node (destination) or
+  in the whole network between all the sources and destinations. See 2.9, 2.10.
+* PACKET SIZE VS THROUGHPUT graph shows packet size on X axis and minimal/average/maximal throughput on Y axis.
+  Throughput is calculated in each TIME INTERVAL and then minimal/average/maximal value is calculated from all the time intervals.
+* PACKET SIZE VS DELAY graph shows minimal/average/maximal delay in the whole network (simulation End2End delay) or delay between
+  Current and Other node. See Direct Connection option.
+* PACKET SIZE VS JITTER graph shows minimal/average/maximal jitter in the whole network (simulation jitter) or jitter between
+  Current and Other node. 
+* PACKET SIZE VS PROCESSING TIME graph shows minimal/average/maximal processing times in the whole network (simulation processing time) 
+  or processing times between Current and Other node.
+* PACKET SIZE VS RTT graph shows minimal/average/maximal RTT in the whole network (simulation RTT) or RTT between
+  Current and Other node. See 2.9, 2.10.
+* JITTER (of ...) (Y axis) = current event (generate/send/receive/forward/drop) time -
+  previous event time /  current event sequence number (X axis) - previous event sequence number.
+* SEND EVENTS TIME vs JITTER graph shows time when packets were sent (X axis) vs packets jitter (Y axis).
+  If S(i) is the time packet i was sent from the sender, and R(i) is the time it was received by the receiver, 
+  the jitter(i)=|(R(i+1)-S(i+1))-(R(i)-S(i)|. Jitter definition is the same for RECEIVE EVENTS TIME vs JITTER graphs
+  and for PACKETS IDs vs JITTER graphs. SOURCE AND DESTINATION TRACE LEVEL options are used for the jitter calculations.
+* RECEIVE EVENTS TIME vs JITTER graph shows time when packets were received (X axis) vs packets jitter (Y axis).
+  SOURCE AND DESTINATION TRACE LEVEL options are used for the jitter calculations.
+* PACKETS IDs vs JITTER graph shows sent packets IDs (X axis) vs packets jitter (Y axis).
+  SOURCE AND DESTINATION TRACE LEVEL options are used for the jitter calculations.
+* SENT PACKET ID vs RTT graph shows sent packets IDs (X axis, not ack packets) at the source vs RTT (Y axis). See 2.9, 2.10.
+* SEND EVENTS TIME vs DELAYS graph shows time when packets were sent (X axis) vs packets delays (Y axis).
+* RECEIVE EVENTS TIME vs DELAYS graph shows time when packets were received (X axis) vs packets delays (Y axis).
+* FORWARD/RECEIVE EVENTS TIME vs PROCESSING TIMES graph shows time when packets were forwarded/received (X axis) 
+  vs processing times (Y axis).
+* CUMULATIVE DISTRIBUTION is an empirical cumulative distribution function.
+* All send events time vs number of intermediate nodes graph shows time when packets were sent (X axis, for the whole
+  network) vs number of intermediate nodes (Y axis) forwarding (fwd) or receiving (rec) the packets between the source node 
+  and the destination node. All receive events time vs number of intermediate nodes graph is similar. DIRECT CONNECTION MUST BE OFF.
+* Send events time at CN vs number of intermediate nodes graph shows time when packets were sent by CURRENT NODE (X axis)
+  vs number of intermediate nodes (Y axis) forwarding (fwd) or receiving (rec) the packets between the source node (CURRENT NODE) 
+  and the destination node (OTHER NODE). Receive events time at ON vs number of intermediate nodes graph is similar. 
+  DIRECT CONNECTION MUST BE OFF.
+* All packets IDs vs number of intermediate nodes graph shows packets IDs (X axis, for the whole network) 
+  vs number of intermediate nodes (Y axis) forwarding (fwd) or receiving (rec) the packets between the source node and the destination node.
+  Packets IDs vs number of intermediate nodes concerns only CURRENT NODE (the source) AND OTHER NODE (the destination). 
+  DIRECT CONNECTION MUST BE OFF.
+* For PACKET ID vs DELAY, PACKET ID vs PROCESSING TIME, PACKET ID vs JITTER, PACKET ID vs RTT and number of intermediate nodes graphs 
+  packets IDs are sorted in ascending order.
+SOURCE AND DESTINATION TRACE LEVEL options are used for all the End2End delays graphs.
+See 2.3 and 2.4 for DELAYS details.
+See 2.7 and 2.8 for PROCESSING TIMES details.
+
+5. 3D GRAPHS
+============
+
+* 3D graphs can be rotated. To rotate 3D graphs hold left mouse button.
+* CN means source node (X axis on the right side) and ON destination node (Y axis on the left side, see 8. Shortcuts, 3.4).
+* When there are no packets transmitted an empty graph is plotted (Z equals zero).
+* Sometimes when DIRECT CONNECTION option is ON (see 3.4) SUM OF NUMBER OF LOST PACKETS AT ALL THE NODES 
+  graph can show higher values when PACKET TYPE option (see 7) is ON than if it's OFF. It means that 
+  CURRENT NODE forwarded packet(s) directly to OTHER NODE and forwarded packet(s) with '-Id' field = -1 
+  (see 2.1, 9.6) or forwarded packet(s) only with '-Id' field = -1. 
+  OTHER NODE received some of them (if lost) both directly forwared and with '-Id' field = -1.
+See 3.5 for details about some 3D graphs.
+
+
+6. HISTOGRAMS
+=============
+
+* histograms show frequency distribution
+* Each histogram has N containers where N=NUMBER OF HISTOGRAM INTERVALS.
+* Delays histograms show delays on X axis and number of packets (delays) on Y axis.
+* Delays between 2 nodes are calculated in the same way like in 2.4.
+* Processing times histograms show processing times on X axis and number of packets (processing times) on Y axis.
+* When USE SPECIFIED EDGES FOR HISTOGRAMS option is off NUMBER OF HISTOGRAM INTERVALS (containers) is used.
+  In the other case specified egdes (in the field HIST. EDGES) are used. Only values inside the edges are counted, 
+  e.g. for edges 0.03 0.05 0.07 values are counted between 0.03 and 0.05 (>=0.03 and <0.05), between 0.05 and 0.07 (>=0.05 and <0.07), 
+  and the last container shows count of any values of X that match the last value of HIST. EDGES (=0.07).
+  To plot value count e.g. greater than 0.05 (>=0.05) type 0.05 inf in the HIST. EDGES field.
+  To plot value count e.g. lower than 0.05 (<0.05) type 0 0.05 in the HIST. EDGES field.
+
+
+7. OTHER OPTIONS
+================
+
+<-> button                     - switches between Current and Other node
+CURRENT NODE                   - current node number
+END TIME                       - time interval end (see 3.3)
+FLOW ID                        - flow identificator (see 3.15 for details)
+HIST. EDGES                    - histogram edges (see 3.7 for details)
+NUMBER OF HISTOGRAM INTERVALS  - number of histogram containers
+OTHER NODE                     - other node number
+PACKET TYPE                    - enables calculations for selected packet types (selected: +, deselected: -)
+                                 to select/deselect a packet type choose it from the list
+                                 all the types are deselected by default
+                                 if this options is not checked all the types are used in calculations
+PACKET SIZE                    - enables calculations for selected packet sizes (selected: +, deselected: -)
+                                 to select/deselect a packet size choose it from the list
+                                 all the types are deselected by default
+                                 if this options is not checked all the sizes are used in calculations
+SELECT/DESELECT ALL SIZES      - selects or deselects all packets sizes from PACKET SIZE list
+SOURCE/DESTINATION TRACE LEVEL - trace level at source/destination node used for End2End delays and some jitter calculations 
+                                 (see 2.3, 2.4, 4)
+START TIME                     - time interval beginning (see 3.3)
+TIME INTERVAL LENGTH           - for throughput graphs (see 4. 2D Graphs)
+TITLE                          - sets graph title
+X, Y, Z AXIS LABEL             - sets labels for the axes
+
+
+8. SHORTCUTS
+============
+
+Shortcuts are used in network information menu or graphs legend.
+ACK:        <acknowledge packet type> (for RTT)
+CN:         <current node number>
+DC:         <direct connection>
+DTL:        <destination trace level>
+ET:         <end time>
+FID:        <flow ID>
+HISTEDGES:  <histogram edges>
+HISTINT:    <number of histogram intervals>
+IDx1:       <count packets IDs only once is on> (see 3.5)
+LSX:        <log scaling on X axis>
+LSY:        <log scaling on Y axis>
+LSZ:        <log scaling on Z axis>
+MARKPOINTS: <marks plotted data points with circles>
+MAJORGRID:  <adds major grid lines to the axes>
+MINORGRID:  <adds minor grid lines to the axes>
+N/A:        <not available> (see 2.4)
+node:       <node number>
+ON:         <other node number>
+PID:        <packet ID>
+PT:         <packet type>
+PS:         <packet size>
+[sec]:      <seconds>
+seq#:       <sequence number>
+SPAK:       <sent packet type> (for RTT)
+SPID:       <sent packet ID> (for RTT)
+ST:         <start time>
+STL:        <source trace level>
+TIL:        <time interval length> (for throughput graphs)
+TM:         <turbo mode>
+X:          <description of X axis>
+Y:          <description of Y axis>
+
+
+9. SUPPORTED FILE FORMATS 
+=========================
+
+* Trace graph supports all NS trace file formats (one wired, two wireless, two wired+wireless) except http trace format.
+  Examples of these formats are shown below. Lines are copied from some files randomly.
+  Trace graph also has it's own trace file format. You can convert your own trace files into Trace graph 
+  file format if your trace files are different from formats described in 9.1, 9.2, 9.3, 9.4, 9.5. See chapter 9.6 for details.
+* Trace graph reads trace files in wireless format (see 9.2) with HEXADECIMAL nodes numbers in the 11th column
+  ('-Ms' field in new trace file format, see 9.3, 9.6). It converts all the numbers to decimal
+  and additionally creates 'temp' file in Trace graph format (see 9.6) in case some of the numbers can
+  be decimal before conversion. You can change these numbers in the 8th column (see 9.6) in 'temp' file yourself.
+  For example, a line before conversion:
+
+  s 5.000075000 _10_ MAC  --- 0 AODV 104 [0 ffffffff a 800] ------- [10:255 -1:255 1 0] [0x2 0 1 [11 0] [10 1]] (REQUEST)
+
+  and after hex to dec conversion (a=10, 8th column):
+
+  s 5.000075000 10 MAC 0 AODV 104 10 10 -1 0 -1
+
+  NOTE! Header 'hex' has to be added to a trace file in format 9.2 to turn hex to dec conversion on. For example:
+  
+  hex
+  M 0.0 nn 20 x 670 y 670 rp AODV
+
+* Files with IP addresses like e.g. 1.2.3.0 or 4123567:1 must have 'ip' header (doesn't concern Trace graph format, because it has no IPs),
+  for example:
+  
+  ip
+  + 1 1 0 cbr 1000 ------- 2 0.1.0.2 1.0.1.2 0 0
+
+  All the IPs must be converted into nodes numbers before loading a trace file.
+  To get all the IPs from a trace file you can type '-ip' after file name, e.g.
+  trgraph c:\out.tr -ip
+  You can also get IPs within a time interval (see 1.1, 3.6), e.g.
+  trgraph c:\out.tr -ip 1.1 2.3
+  IPs are saved to a file which name has the following format: trace file name + '.ip' extension.
+  If time interval is specified the file name format is e.g.: trace file name + 'ST_1.1' + 'ET_2.3' + '.ip' extension (see 8).
+  If a trace file is loaded from the File menu the file with IPs is generated automatically if doesn't exist.
+  You have to define relations between nodes numbers and IPs in the saved file with IPs. Below we have an example of such a file:
+
+  0.1.0.2 1:2
+  0.3.0.1 0:1
+  1.0.1.2 2:2
+  1.0.3.1 3:1
+  2048:2 5:2
+  4194305 6
+  4194305:2 6:2
+  4194307:1 4:1
+  6144:1 7:1
+
+  You've got to create the second column with node and (optionally) port number.
+  For wireless format (see 9.2) and wired + wireless format (see 9.4) there have to be ':' between node and port number.
+  For wired format (see 9.1), new trace file format (see 9.3) and wired + new trace file format (see 9.5) there have to be '.' 
+  between node and port number. When IP file is created properly trace file can be loaded. Trace graph converts all the IPs into
+  nodes numbers line after line (strings are replaced) and writes an output trace file which name format is: trace file format 
+  without extension + 'no_ip.tr'. When you have the file with IPs you can do the conversion in another way - it can be much faster.
+  Then trace file with changed IPs is converted to Trace graph format, saved in 'temp' file and loaded.
+  NOTE! Because IPs are converted in the order they appear in the file (with '.ip' extension) sometimes you've got to remove some IPs 
+        or change their order to avoid replacing other strings in a line or already replaced IPs. 
+  For example first line must be removed because it's not neccessary:
+  1:0
+  0.1.0.2
+  0.3.0.1        
+
+* Trace graph SKIPS LINES (formats 9.2, 9.3, 9.4, 9.5) WHICH DON'T CONTAIN ALL THE NECESSARY INFORMATION 
+  (see columns description in 9.6) or CONVERTS THEM INTO Trace graph trace format if it's possible. 
+
+9.1. Wired
+----------
++ 0.1 8 1 tcp 40 ------- 2 8.0 7.0 0 0
+- 0.1 8 1 tcp 40 ------- 2 8.0 7.0 0 0
+r 0.11016 8 1 tcp 40 ------- 2 8.0 7.0 0 0
+
+9.2. Wireless
+-------------
+M 0.00000 0 (212.25, 215.07, 0.00), (392.36, 331.50), 13.75
+s 82.613915213 _2_ RTR  --- 3 DSR 24 [0 0 0 0] ------- [2:255 3:255 32 0] 1 [1 2] [0 2 0 0->0] [0 0 0 0->0]
+r 82.620724496 _5_ RTR  --- 4 DSR 44 [a2 5 3 800] ------- [3:255 2:255 255 5] 3 [0 2] [1 2 3 2->3] [0 0 0 0->0]
+f 82.621436060 _0_ RTR  --- 3 DSR 44 [0 ffffffff 5 800] ------- [2:255 3:255 32 0] 3 [1 2] [0 2 0 0->0] [0 0 0 0->0]
+s 117.939882761 _2_ RTR  --- 242 cbr 540 [0 0 0 0] ------- [2:1 4:0 32 4] [89] 0 1
+r 117.942740948 _4_ RTR  --- 242 cbr 540 [a2 4 2 800] ------- [2:1 4:0 32 4] [89] 1 1
+
+9.3. New trace file format (wireless)
+-------------------------------------
+s -t 0.267662078 -Hs 0 -Hd -1 -Ni 0 -Nx 5.00 -Ny 2.00 -Nz 0.00 -Ne -1.000000 -Nl RTR -Nw --- -Ma 0 -Md 0 -Ms 0 -Mt 0 -Is 0.255 -Id -1.255 -It message -Il 32 -If 0 -Ii 0 -Iv 32 
+s -t 1.511681090 -Hs 1 -Hd -1 -Ni 1 -Nx 390.00 -Ny 385.00 -Nz 0.00 -Ne -1.000000 -Nl RTR -Nw --- -Ma 0 -Md 0 -Ms 0 -Mt 0 -Is 1.255 -Id -1.255 -It message -Il 32 -If 0 -Ii 1 -Iv 32 
+M 10.00000 0 (5.00, 2.00, 0.00), (20.00, 18.00), 1.00
+s -t 10.000000000 -Hs 0 -Hd -2 -Ni 0 -Nx 5.00 -Ny 2.00 -Nz 0.00 -Ne -1.000000 -Nl AGT -Nw --- -Ma 0 -Md 0 -Ms 0 -Mt 0 -Is 0.0 -Id 1.0 -It tcp -Il 40 -If 2 -Ii 2 -Iv 32 -Pn tcp -Ps 0 -Pa 0 -Pf 0 -Po 0 
+r -t 10.000000000 -Hs 0 -Hd -2 -Ni 0 -Nx 5.00 -Ny 2.00 -Nz 0.00 -Ne -1.000000 -Nl RTR -Nw --- -Ma 0 -Md 0 -Ms 0 -Mt 0 -Is 0.0 -Id 1.0 -It tcp -Il 40 -If 2 -Ii 2 -Iv 32 -Pn tcp -Ps 0 -Pa 0 -Pf 0 -Po 0 
+
+NOTE! AGT and RTR and MAC or AGT and RTR trace levels should be ON in wireless simulations because 
+      calculations results can be wrong when some of the trace levels are OFF.
+NOTE! It's better to use old wireless format (9.2) than new trace format (faster file loading).
+
+9.4. Wired-wireless
+-------------------
+A trace file in this format must have 'mixed12' header, for example:
+mixed12 ip
++ 1 1 0 cbr 1000 ------- 2 0.1.0.2 1.0.1.2 0 0
+- 1 1 0 cbr 1000 ------- 2 0.1.0.2 1.0.1.2 0 0
+s 1.000000000 _7_ AGT  --- 1 cbr 1000 [0 0 0 0] ------- [4194307:1 6144:1 32 0] [0] 0 0
+s 1.001000000 _7_ RTR  --- 1 cbr 1000 [0 0 0 0] ------- [4194307:1 6144:1 32 0] [0] 0 0 
+s 1.010000000 _7_ MAC  --- 1 cbr 1000 [0 0 0 0] ------- [4194307:1 6144:1 32 0] [0] 0 0 
+
+NOTE! AGT, RTR and MAC trace levels have to be ON. See 9 for notes about 'ip' in the file header.
+
+9.5. Wired-new trace file format
+--------------------------------
+A trace file in this format must have 'mixed13' header, for example:
+mixed13 ip
++ 1 1 0 cbr 1000 ------- 2 0.1.0.2 1.0.1.2 0 0
+- 1 1 0 cbr 1000 ------- 2 0.1.0.2 1.0.1.2 0 0
+s -t 1.000000000 -Hs 7 -Hd -2 -Ni 7 -Nx 258.00 -Ny 244.00 -Nz 0.00 -Ne -1.000000 -Nl AGT -Nw --- -Ma 0 -Md 0 -Ms 0 -Mt 0 -Is 4194307.1 -Id 6144.1 -It cbr -Il 1000 -If 5 -Ii 1 -Iv 32 -Pn cbr -Pi 0 -Pf 0 -Po 0 
+s -t 1.001000000 -Hs 7 -Hd -2 -Ni 7 -Nx 258.00 -Ny 244.00 -Nz 0.00 -Ne -1.000000 -Nl RTR -Nw --- -Ma 0 -Md 0 -Ms 0 -Mt 0 -Is 4194307.1 -Id 6144.1 -It cbr -Il 1000 -If 5 -Ii 1 -Iv 32 -Pn cbr -Pi 0 -Pf 0 -Po 0 
+s -t 1.010000000 -Hs 7 -Hd -2 -Ni 7 -Nx 258.00 -Ny 244.00 -Nz 0.00 -Ne -1.000000 -Nl MAC -Nw --- -Ma 0 -Md 0 -Ms 0 -Mt 0 -Is 4194307.1 -Id 6144.1 -It cbr -Il 1000 -If 5 -Ii 1 -Iv 32 -Pn cbr -Pi 0 -Pf 0 -Po 0 
+
+NOTE! AGT, RTR and MAC trace levels have to be ON. See 9 for notes about 'ip' in the file header.
+
+9.6. Converting your own trace files formats into Trace graph trace file format
+---------------------------------------------------------------------------------
+Trace graph trace file format has 12 columns (fields tags in brackets are from the file format described in 9.3):
+ 1. event (s, r, f, d)
+ 2. event time (-t)
+ 3. current node number (-Ni)
+ 4. trace level (-Nl) (AGT, RTR, MAC, IFQ)
+ 5. packet unique ID (-Ii)
+ 6. packet type (-It) plus 15-length(packet type) spaces before packet size
+ 7. packet size (-Il)
+ 8. other node number (-Ms)
+ 9. hop from (-Is)
+10. hop to (-Id)
+11. next node number (-Hd)
+12. sequence number (-Pi or -Ps, equals -1 if not present)
+
+A file in this format must have the following header: tracegraph.
+For example we have 2 first lines of a Trace graph trace file:
+
+tracegraph
+s 0.267662078 0 RTR 0 message        32 0 0 -1 -1 -1
+
+Below we have 3 example lines of formats described in 9.2, 9.3 and 9.6.
+The lines are from the same simulation, so trace formats differences can be seen.
+
+s 0.267662078 _0_ RTR  --- 0 message 32 [0 0 0 0] ------- [0:255 -1:255 32 0]
+s -t 0.267662078 -Hs 0 -Hd -1 -Ni 0 -Nx 5.00 -Ny 2.00 -Nz 0.00 -Ne -1.000000 -Nl RTR -Nw --- -Ma 0 -Md 0 -Ms 0 -Mt 0 -Is 0.255 -Id -1.255 -It message -Il 32 -If 0 -Ii 0 -Iv 32 
+s 0.267662078 0 RTR 0 message        32 0 0 -1 -1 -1
+
+Another example 3 lines:
+
+D 78.470313904 _0_ IFQ  ARP 2 tcp 80 [0 0 0 800] ------- [0:0 1:0 32 1] [0 0] 0 0
+d -t 78.470313904 -Hs 0 -Hd 1 -Ni 0 -Nx 20.00 -Ny 18.00 -Nz 0.00 -Ne -1.000000 -Nl IFQ -Nw ARP -Ma 0 -Md 0 -Ms 0 -Mt 800 -Is 0.0 -Id 1.0 -It tcp -Il 80 -If 2 -Ii 2 -Iv 32 -Pn tcp -Ps 0 -Pa 0 -Pf 0 -Po 0 
+d 78.470313904 0 IFQ 2 tcp            80 0 0 1 1 0
+
+As for wired format to Trace graph format conversion '+' must be replaced by 's' (4th column in Trace graph format=AGT, 8th column=0, 
+11th column=0) or 'r' (if '+' after 'r' for the same packet at the same node, 4th column=RTR, 8th column=-1, 11th column=4th column 
+in wired format), '-' must be replaced by 's' (4th column=MAC, 8th column=0, 11th column=0) or 'f' (4th column=RTR, 8th column=0, 
+11th column=4th column in wired format). For 'r' event 3rd column=4th column in wired format, 4th column=MAC, 8th column=3rd column 
+in wired format, 11th column=0. For 'd' event (4th column=RTR, 8th column=0, 11th column=4th column in wired format).
+For example before conversion:
+
++ 1.00 1 0 cbr 1000 ------- 2 1.2 2.2 0 0
+- 1.00 1 0 cbr 1000 ------- 2 1.2 2.2 0 0
+
+after conversion:
+
+s 1.00 1 AGT 0 cbr            1000 0 1.2 2.2 0 0
+s 1.00 1 MAC 0 cbr            1000 0 1.2 2.2 0 0
+
+
+10. TRACE GRAPH SCRIPT FILE FORMAT
+==================================
+
+To process a trace or a mat file automatically a Trace graph script file has to be written.
+This option is useful when there is a lot of trace files to analyse or when trace files are big (see 11).
+All the analysis results (graphs and network information) are saved to text files (see 3.8, 3.9).
+Script files can be processed from the command line, for example:
+
+trgraph c:\trgraph\out.tr -script c:\samplescript.txt
+trgraph c:\mat\out.mat -script samplescript.txt
+trgraph out.tr -script samplescript.txt
+
+An example script file:
+
+SAVE MAT FILE: ON
+SAVE GRAPHS TO JPEG: ON
+SAVE GRAPHS STATISTICS: ON
+GRAPHS LEGEND: ON
+RESET OPTIONS: ON
+CLOSE PROGRAM WHEN FINISHED: ON
+GRAPHS:
+IDs of all the generated packets,PT: cbr,ST: 1.1,ET: 3.3,MARKPOINTS,MINORGRID
+%Cumulative sum of numbers of generated packets at current node,PT: tcp,CN: 2,ON: 3,DC
+CN2ON delays frequency distribution,HISTEDGES: 0.01 0.02 0.03 0.04,PT: cbr,STL: RTR,DTL: MAC 
+NETWORK INFORMATION:
+Simulation information,PT: cbr
+Current node information,FID: 1
+
+The first 6 lines have to be like the ones above but they don't have to be in the same order.
+All the 6 options can be ON or OFF. Options:
+
+SAVE MAT FILE               - saves a trace file when loaded to mat file (see 1.2)
+SAVE GRAPHS TO JPEG         - saves all the plotted graphs to jpeg files not only to text files (see 1.3)
+SAVE GRAPHS STATISTICS      - saves all the plotted graphs statistics to text files (see 3.17)
+GRAPHS LEGEND               - enables/disables legend on the graphs
+RESET OPTIONS               - turns all the options (like Packet type, Flow ID, Other node, Time interval, etc.) off
+                              after each processed line from the script file
+CLOSE PROGRAM WHEN FINISHED - closes (or not) Trace graph when analysis is done
+
+The 7th line has to contain 'GRAPHS'. All the lines with graphs and network information names and options have to be ended 
+with a comma (,). All the options (see 8. Shortcuts) also have to be separated with a comma. Options parameters 
+(e.g. 1.1 is a parameter for ST:) have to be separated with spaces. Options with parameters have to be ended with 
+a colon (:) (e.g. PT:). Options without parameters cannot be ended with a colon (:) (e.g. DC, MINORGRID). 
+Lines beginning with '%' are skipped. Graphs and network information names have to be the same as these in the menus. 
+There is a sample script file (samplescript.txt) in the 'doc' subdirectory.
+
+
+11. Trace graph configuration file
+==================================
+
+Trace graph configuration file must have name trgraph.cfg. If the file doesn't exist or values are wrong default configuration is set.
+Variables list:
+PRECISION                  - number of precision fields for the calculations results (range 1 - 16),
+                             default value is 10
+SPLIT                      - small vector length for splitting big vectors to speed up delays, jitter, RTT and file loading calculations 
+                             (range 100 - 100000), on my computer the best value is around 2500 (default value)
+REMOVE TEMP FILE           - temporary file in Trace graph format is removed after loading, option can be ON or OFF,
+                             default value is ON
+AUTOMATIC FORMAT DETECTION - enables (ON)/disables (OFF) automatic file format (see 9 for supported formats) detection, 
+                             when option is ON file headers like 'tracegraph', 'hex', 'mixed12', 'mixed13', 'ip', etc. (see 9) are not needed,
+                             if option is OFF headers must be added to trace files,
+                             default value is ON
+MAXIMAL NUMBER OF LINES    - maximal number of lines (greater than 99) to read for automatic file format detection, 
+                             if a format cannot be detected the number has to be increased or automatic detection has to be disabled,
+                             default value is 1000, there is 'Maximal number of lines (...) has been processed' message after processing
+                             number of lines set in the configuration file
+
+
+12. SYSTEM REQUIREMENTS
+=======================
+
+I've checked Trace graph runs on a Pentium class machine with 32MB of RAM but it's very slow. 
+On my Celeron 366@525, 192MB, the speed is acceptable. Trace graph runs best in 1024x768 or 
+higher resolution. SYSTEM FONT SIZE HAS TO BE SET TO SMALL before running the program. 
+Matlab doesn't cope with larger fonts and some names are cut. It should be about 3 times free space 
+as a trace file size to load the trace file (doesn't concern mat files and trace files in Trace graph 
+format without a specified time interval). I don't know maximum trace file size that can be loaded 
+(I think it's less than 200MB). I only know that a 150MB trace file can be loaded.
+
+NOTE! Loading trace files, delays, jitter, RTT and processing times calculations can take a long time.
+
+
+13. AUTHOR CONTACT
+==================
+
+Copyright (c) 2001-2003 by Wroclaw University of Technology, Poland. All rights reserved. Please see copyright.txt.
+Trace graph author: Jaroslaw Malek, email: wido@o2.pl.
+(if you email me and don't receive any answer it means my or your email hasn't been delivered so try ICQ)
+ICQ UIN: 53167277
+Network Simulator ns-2 web site: http://www.isi.edu/nsnam/ns/.
+Matlab web site: http://www.mathworks.com.
+Wroclaw University of Technology web site: http://www.pwr.wroc.pl.
+Trace graph web site: http://www.geocities.com/tracegraph/.
+Trace graph mirror web site: http://diament.ists.pwr.wroc.pl/~tracegr/tracegraph.php.

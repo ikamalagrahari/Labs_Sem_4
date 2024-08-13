@@ -1,0 +1,87 @@
+# makefile.lcc	Makefile for building with LCC-Win32
+# Copyright (c) 2002 by Christopher Heng. All rights reserved.
+
+# $Id: makefile.lcc 1.1 2002/07/01 07:26:50 chris Exp $
+
+# WARNING: This makefile produces a version of TODOS.EXE and FROMDOS.EXE
+# that does *not* handle wildcards on the command line. If you want the
+# executable to handle wildcards, used the supplied executables. I haven't
+# figured out how to get wildcard preprocessing of command line arguments
+# with LCC-Win32 yet. Is there a obj file somewhere that I can link into
+# the application without having to write my own command line globbing routine?
+
+# This makefile assumes the LCC-Win32 default MAKE.EXE
+# It creates a Win32 console application.
+# Unlike the other makefiles, this is a barebones makefile - it was
+# created by the LCC-Win32 IDE, Wedit, with minor modifications.
+
+SRCDIR=.
+CFLAGS=-Ic:\lcc\include -Ilib -O 
+CC=lcc.exe
+LINKER=lcclnk.exe
+RM = deltree /y
+
+OBJS=\
+	utility.obj \
+	tofrodos.obj \
+	getopt.obj \
+	init.obj
+
+LIBS=
+
+all: todos.exe fromdos.exe
+
+clean:
+	$(RM) $(OBJS)
+
+clobber: clean
+	$(RM) todos.exe fromdos.exe
+
+fromdos.exe: todos.exe
+	copy todos.exe fromdos.exe
+
+todos.exe:	$(OBJS) Makefile
+	$(LINKER)  -s -subsystem console -o $(SRCDIR)\todos.exe $(OBJS) $(LIBS)
+
+# Build UTILITY.C
+UTILITY_C=\
+	$(SRCDIR)\config.h\
+	$(SRCDIR)\emsg.h\
+	$(SRCDIR)\tofrodos.h\
+	$(SRCDIR)\utility.h\
+
+utility.obj: $(UTILITY_C) $(SRCDIR)\utility.c
+	$(CC) -c $(CFLAGS) $(SRCDIR)\utility.c
+
+# Build TOFRODOS.C
+TOFRODOS_C=\
+	$(SRCDIR)\config.h\
+	$(SRCDIR)\emsg.h\
+	$(SRCDIR)\tofrodos.h\
+	$(SRCDIR)\utility.h\
+	$(SRCDIR)\version.h\
+
+tofrodos.obj: $(TOFRODOS_C) $(SRCDIR)\tofrodos.c
+	$(CC) -c $(CFLAGS) $(SRCDIR)\tofrodos.c
+
+# Build GETOPT.C
+GETOPT_C=\
+	$(SRCDIR)\lib\getopt.h\
+
+getopt.obj: $(GETOPT_C) $(SRCDIR)\lib\getopt.c
+	$(CC) -c $(CFLAGS) $(SRCDIR)\lib\getopt.c
+
+# Build INIT.C
+INIT_C=\
+	$(SRCDIR)\config.h\
+	$(SRCDIR)\emsg.h\
+	$(SRCDIR)\tofrodos.h\
+	$(SRCDIR)\utility.h\
+	$(SRCDIR)\version.h\
+
+init.obj: $(INIT_C) $(SRCDIR)\init.c
+	$(CC) -c $(CFLAGS) $(SRCDIR)\init.c
+
+link:
+	$(LINKER)  -s -subsystem console -o $(SRCDIR)\todos.exe $(OBJS) $(LIBS)
+

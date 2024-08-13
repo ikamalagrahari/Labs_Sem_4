@@ -1,0 +1,152 @@
+# makefile.wcc	Makefile for building with the Watcom C/C++ compiler.
+# Copyright (c) 1996,1997 by Christopher Heng. All rights reserved.
+
+# $Id: makefile.wcc 1.12 2002/06/20 06:44:48 chris Exp $
+
+# Prevent checking for existence of targets after rule has been executed.
+.NOCHECK
+
+# This makefile assumes you have WILDARGV.C in the LIB subdirectory.
+# WILDARGV.C is not provided in the distribution. You should use
+# WILDARGV.C from WATCOM\SRC\STARTUP\WILDARGV.C. This file expands
+# wildcards on the command line.
+
+# Define the following if you need
+#
+#	DEBUG	To add debugging information.
+#		If you want fine-tune the amount of debugging info, you
+#		can define CDEBUG to be the compiler option switch and
+#		LDEBUG for the linker.
+#	TARGET	To determine the type of target
+#		32bit if you want a 32 bit DOS executable
+#		16bit if you want a 16 bit DOS executable
+#		Win32 if you want a Windows 32 bit console executable
+#		The default is to generate a Win32 console executable.
+
+# ---------- Ignore this: for author's own information only ----------
+# If you want to make a distribution file, you need to
+#	1. checkout
+#	2. wmake -f makefile.wcc TARGET=16bit dist
+#	3. copy todos.exe todos16.exe
+#	4. wmake -f makefile.wcc clean
+#	5. wmake -f makefile.wcc TARGET=Win32 dist
+#	6. copy todos.exe todos32.exe
+#	7. wmake -f makefile.wcc save
+#	8. go to Linux, unpack the TFD.ZIP you zipped in step 2:
+#		cd /tmp
+#		md tofrodos
+#		unzip -L -a /dos/g/chris/prog/tfd.zip
+#	9. ln -s makefile.gcc Makefile
+#	10. mv LIB lib
+#	11. make VERSTR=1.3 tardist
+#	(or whatever the version number happens to be)
+
+!ifdef DEBUG
+!ifndef CDEBUG
+CDEBUG = -d2
+!endif
+!ifndef LDEBUG
+LDEBUG = d all
+!endif
+!endif
+
+!ifeq TARGET 32bit
+CCBIN = wcc386
+!ifndef TCFLAGS
+TCFLAGS = -bt=DOS -mf -5r -fp3
+!endif
+!ifndef TLFLAGS
+TLFLAGS = sys dos4g
+!endif
+!else
+!ifeq TARGET 16bit
+CCBIN = wcc
+!ifndef TCFLAGS
+TCFLAGS = -ms -bt=DOS
+!endif
+!ifndef TLFLAGS
+TLFLAGS = sys dos
+!endif
+!else	# Win32
+CCBIN = wcc386
+!ifndef TCFLAGS
+TCFLAGS = -bt=nt -5r -fp5 -5
+!endif
+!ifndef TLFLAGS
+TLFLAGS = sys nt
+!endif
+!endif	# if 16bit else Win32
+!endif	# if 32bit else 16bit||Win32
+
+# programs
+CC = $(CCBIN)
+LD = wlink
+LN = copy
+RM = deltree /y
+ZIP = zip
+
+# flags
+CFLAGS = -oxa -wx -fpi -zp1 -zq $(TCFLAGS) $(CINCFLAGS) $(CDEBUG)
+CINCFLAGS = -i=$(LIBDIR)
+COUTFLAG = /fo=
+LDFLAGS = $(TLFLAGS) op q,c,m,el $(LDEBUG)
+ZIPSRCFLAGS = -r -9
+
+# directories
+LIBDIR = lib
+LIBRCS = lib\rcs
+SRCDIR = .
+SRCRCS = rcs
+
+# filenames
+FROMDOS = fromdos.exe
+LDRESP = ldresp.rsp
+TODOS = todos.exe
+ZIPSRCNAME = TFD.ZIP
+
+# lists of filenames
+LIBOBJS = $(LIBDIR)\getopt.obj &
+	$(LIBDIR)\mktemp.obj &
+	$(LIBDIR)\wildargv.obj
+OBJS = init.obj &
+	tofrodos.obj &
+	utility.obj
+
+# implicit rules
+.c: $(SRCDIR);$(LIBDIR)
+.h: $(SRCDIR);$(LIBDIR)
+.c.obj:	.AUTODEPEND
+	$(CC) $(CFLAGS) $(COUTFLAG)$@ $[@
+
+# user visible rules
+all: $(FROMDOS) $(TODOS)
+	%null
+
+dist: all
+	%null
+
+clean:
+	$(RM) $(OBJS) $(LIBOBJS)
+	$(RM) *.map *.ncb *.obj *.bak *.idb *.plg *.~de *.err *.cfg
+	$(RM) $(LDRESP) tofrodos.exe todos.exe fromdos.exe
+
+clobber: clean
+	$(RM) *.exe
+
+save:
+	$(ZIP) $(ZIPSRCFLAGS) $(ZIPSRCNAME) *
+
+# real rules
+$(FROMDOS): $(OBJS) $(LIBOBJS) $(LDRESP)
+	$(LD) @$(LDRESP)
+
+$(TODOS): $(FROMDOS)
+	$(LN) $(LNFLAGS) $(FROMDOS) $(TODOS)
+
+
+# support rules
+$(LDRESP): $(__MAKEFILES__)
+	%write $@ $(LDFLAGS)
+	%append $@ name $(FROMDOS)
+	for %i in ($(OBJS)) do @%append $@ file %i
+	for %i in ($(LIBOBJS)) do @%append $@ file %i

@@ -1,0 +1,13 @@
+1) Write NS2 file in txt and save as "filename.tcl".
+
+2)Save the created file "filename.tcl" in the bin directory of   NS2executableDir.
+
+3)Now from command prompt move to the bin of NS2executableDir.
+
+4)To Run type:
+
+ ....>ns filename.tcl (then press Enter key)
+
+5)To see the output
+
+....>nam out.nam (then press Enter key)
